@@ -54,6 +54,9 @@ func (err *TaskRunError) TaskExitCode() int {
 	if _, ok := errors.AsType[*TaskTimeoutError](err.Err); ok {
 		return TimeoutExitCode
 	}
+	if taskErr, ok := errors.AsType[TaskError](err.Err); ok {
+		return taskErr.Code()
+	}
 	return err.Code()
 }
 
